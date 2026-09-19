@@ -1,0 +1,84 @@
+START
+
+Create a Scanner object to receive user input
+
+Create an ArrayList named days to store the days of the week
+Create an ArrayList named temperatures to store the average temperatures
+
+Add Monday to the days ArrayList
+Add Tuesday to the days ArrayList
+Add Wednesday to the days ArrayList
+Add Thursday to the days ArrayList
+Add Friday to the days ArrayList
+Add Saturday to the days ArrayList
+Add Sunday to the days ArrayList
+
+Add 67.3 to the temperatures ArrayList
+Add 69.8 to the temperatures ArrayList
+Add 67.1 to the temperatures ArrayList
+Add 70.4 to the temperatures ArrayList
+Add 64.3 to the temperatures ArrayList
+Add 78.9 to the temperatures ArrayList
+Add 69.9 to the temperatures ArrayList
+
+Display "Weekly Temperature Program"
+
+Ask the user to enter and type in a day of the week
+Tell the user they can also enter "week" to display the entire week's temperatures
+
+Store the user's response in userInput
+
+
+IF userInput equals "week"
+
+    Set totalTemperature equal to 0
+
+    Display "Weekly Temperatures"
+
+    FOR each position in the days ArrayList
+
+        Display the day stored at the current position
+
+        Display the temperature stored at the same position
+
+        Add the current temperature to totalTemperature
+
+    END FOR
+
+    Calculate weeklyAverage by dividing totalTemperature by the number of temperatures stored
+    
+    Display weeklyAverage
+
+
+ELSE
+
+    Set dayFound equal to false
+
+    FOR each position in the days ArrayList
+
+        IF the current day equals userInput
+
+            Display the current day
+
+            Display the temperature stored at the same position
+
+            Set dayFound equal to true
+
+            Stop the loop
+
+        END IF
+
+    END FOR
+
+    IF dayFound equals false
+
+        Display an invalid entry message
+
+    END IF
+
+END IF
+
+
+Close the Scanner
+
+END
