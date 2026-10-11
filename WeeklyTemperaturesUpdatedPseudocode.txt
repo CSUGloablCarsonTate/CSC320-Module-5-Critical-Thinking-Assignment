@@ -1,0 +1,118 @@
+BEGIN
+
+    CREATE Scanner object for user input
+
+    CREATE ArrayList named days
+    CREATE ArrayList named temperatures
+
+    ADD "Monday" to days
+    ADD "Tuesday" to days
+    ADD "Wednesday" to days
+    ADD "Thursday" to days
+    ADD "Friday" to days
+    ADD "Saturday" to days
+    ADD "Sunday" to days
+
+    ADD 87.4 to temperatures
+    ADD 96.5 to temperatures
+    ADD 34.7 to temperatures
+    ADD 38.9 to temperatures
+    ADD 67.5 to temperatures
+    ADD 66.9 to temperatures
+    ADD 71.8 to temperatures
+
+    DISPLAY "WEEKLY TEMPERATURE PROGRAM"
+
+    DO
+
+        DISPLAY "Enter a day, week, or exit: "
+        INPUT userInput
+        REMOVE leading and trailing spaces from userInput
+
+        IF userInput equals "week" (ignore capitalization) THEN
+
+            CALL displayWeeklyTemperatures(days, temperatures)
+
+        ELSE IF userInput equals "exit" (ignore capitalization) THEN
+
+            DISPLAY "Thank you for using the Weekly Temperature Program."
+
+        ELSE
+
+            CALL displayDailyTemperature(days, temperatures, userInput)
+
+        END IF
+
+    WHILE userInput does not equal "exit" (ignore capitalization)
+
+    CLOSE Scanner
+
+END MAIN
+
+
+BEGIN 
+
+    displayDailyTemperature(days, temperatures, selectedDay)
+
+    SET dayFound = false
+
+    FOR each position in days ArrayList
+
+        IF current day equals selectedDay (ignore capitalization) THEN
+
+            DISPLAY current day and corresponding temperature
+            FORMAT temperature to one decimal place with "degrees F"
+
+            SET dayFound = true
+
+            EXIT FOR loop
+
+        END IF
+
+    END FOR
+
+    IF dayFound equals false THEN
+
+        DISPLAY "Invalid entry. Please enter Monday through Sunday,
+                 week, or exit."
+
+    END IF
+    
+        displayDailyTemperature
+
+END 
+
+
+BEGIN 
+
+    displayWeeklyTemperatures(days, temperatures)
+
+    DISPLAY "WEEKLY TEMPERATURE RESULTS"
+
+    FOR each position in days ArrayList
+
+        DISPLAY current day and corresponding temperature
+        FORMAT temperature to one decimal place with "degrees F"
+
+    END FOR
+
+    SET average = CALL calculateAverage(temperatures)
+
+    SET highestIndex = CALL findHighestTemperature(temperatures)
+
+    SET lowestIndex = CALL findLowestTemperature(temperatures)
+
+    DISPLAY "Weekly Average: " + average
+    FORMAT average to two decimal places with "degrees F"
+
+    DISPLAY "Highest: " + days[highestIndex] + " " +
+            temperatures[highestIndex] + " degrees F"
+
+    DISPLAY "Lowest: " + days[lowestIndex] + " " +
+            temperatures[lowestIndex] + " degrees F"
+
+    FORMAT highest and lowest temperatures to one decimal place
+
+    DISPLAY "======================================"
+
+END

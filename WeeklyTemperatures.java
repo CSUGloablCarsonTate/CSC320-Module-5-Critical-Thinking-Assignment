@@ -5,14 +5,13 @@ public class WeeklyTemperatures {
 
     public static void main(String[] args) {
 
-        // Create Scanner object for user input
         Scanner scanner = new Scanner(System.in);
 
-        // Create an ArrayLists for the days of the week and their temperatures
+        // Create ArrayLists for days and temperatures
         ArrayList<String> days = new ArrayList<String>();
         ArrayList<Double> temperatures = new ArrayList<Double>();
 
-        // Store the days of the week (E.X. Monday through Sunday)
+        // Store days of the week
         days.add("Monday");
         days.add("Tuesday");
         days.add("Wednesday");
@@ -21,81 +20,167 @@ public class WeeklyTemperatures {
         days.add("Saturday");
         days.add("Sunday");
 
-        // Store the corresponding average temperatures
-        temperatures.add(67.3);
-        temperatures.add(69.8);
-        temperatures.add(67.1);
-        temperatures.add(70.4);
-        temperatures.add(64.3);
-        temperatures.add(78.9);
-        temperatures.add(69.9);
+        // Store corresponding average temperatures
+        temperatures.add(87.4);
+        temperatures.add(96.5);
+        temperatures.add(34.7);
+        temperatures.add(38.9);
+        temperatures.add(67.5);
+        temperatures.add(66.9);
+        temperatures.add(71.8);
 
-        // Ask the user for an input for a day or the week
-        System.out.println("Weekly Temperature Program");
-        System.out.println("--------------------------");
-        System.out.println("Enter a day of the week (E.X. Monday through Sunday)");
-        System.out.print("or enter \"week\" to display the entire week's temperatures: ");
+        System.out.println("===== WEEKLY TEMPERATURE PROGRAM =====");
 
-        String userInput = scanner.nextLine().trim();
+        String userInput;
 
-        // Check if the user wants the entire week
-        if (userInput.equalsIgnoreCase("week")) {
+        do {
+            System.out.print(
+                "\nEnter a day, \"week\", or \"exit\": "
+            );
 
-            double totalTemperature = 0.0;
+            userInput = scanner.nextLine().trim();
 
-            System.out.println("\nWeekly Temperatures");
-            System.out.println("-------------------");
+            if (userInput.equalsIgnoreCase("week")) {
 
-            // Loop through both ArrayLists
-            for (int i = 0; i < days.size(); i++) {
+                // Display all temperatures and statistics
+                displayWeeklyTemperatures(days, temperatures);
+
+            } else if (userInput.equalsIgnoreCase("exit")) {
+
+                System.out.println(
+                    "\nThank you for using the Weekly Temperature Program."
+                );
+
+            } else {
+
+                // Search for the selected day
+                displayDailyTemperature(days, temperatures, userInput);
+            }
+
+        } while (!userInput.equalsIgnoreCase("exit"));
+
+        scanner.close();
+    }
+
+    // Method to display a selected day's temperature
+    public static void displayDailyTemperature(
+            ArrayList<String> days,
+            ArrayList<Double> temperatures,
+            String selectedDay) {
+
+        boolean dayFound = false;
+
+        for (int i = 0; i < days.size(); i++) {
+
+            if (days.get(i).equalsIgnoreCase(selectedDay)) {
 
                 System.out.printf(
-                    "%s: %.1f degrees F%n",
+                    "%n%s: %.1f degrees F%n",
                     days.get(i),
                     temperatures.get(i)
                 );
 
-                totalTemperature += temperatures.get(i);
-            }
-
-            // Calculate the weekly average temperature
-            double weeklyAverage =
-                    totalTemperature / temperatures.size();
-
-            System.out.printf(
-                "%nWeekly Average Temperature: %.2f degrees F%n",
-                weeklyAverage
-            );
-
-        } else {
-
-            boolean dayFound = false;
-
-            // Search through the days ArrayList
-            for (int i = 0; i < days.size(); i++) {
-
-                if (days.get(i).equalsIgnoreCase(userInput)) {
-
-                    System.out.printf(
-                        "%n%s: %.1f degrees F%n",
-                        days.get(i),
-                        temperatures.get(i)
-                    );
-
-                    dayFound = true;
-                    break;
-                }
-            }
-
-            // Display an error if the day was not found within the listed days
-            if (!dayFound) {
-
-                System.out.println(
-                    "\nInvalid entry. Please enter Monday through Sunday or \"week\"."
-                );
+                dayFound = true;
+                break;
             }
         }
 
-        scanner.close();
+        if (!dayFound) {
+            System.out.println(
+                "Invalid entry. Please enter Monday through Sunday, \"week\", or \"exit\"."
+            );
+        }
+    }
+
+    // Method to display all weekly temperatures
+    public static void displayWeeklyTemperatures(
+            ArrayList<String> days,
+            ArrayList<Double> temperatures) {
+
+        System.out.println("\n===== WEEKLY TEMPERATURE RESULTS =====");
+
+        for (int i = 0; i < days.size(); i++) {
+
+            System.out.printf(
+                "%-12s %.1f degrees F%n",
+                days.get(i) + ":",
+                temperatures.get(i)
+            );
+        }
+
+        // Calculate weekly statistics
+        double average = calculateAverage(temperatures);
+
+        int highestIndex = findHighestTemperature(temperatures);
+        int lowestIndex = findLowestTemperature(temperatures);
+
+        // Display weekly statistics
+        System.out.printf(
+            "%nWeekly Average: %.2f degrees F%n",
+            average
+        );
+
+        System.out.printf(
+            "Highest: %s %.1f degrees F%n",
+            days.get(highestIndex),
+            temperatures.get(highestIndex)
+        );
+
+        System.out.printf(
+            "Lowest: %s %.1f degrees F%n",
+            days.get(lowestIndex),
+            temperatures.get(lowestIndex)
+        );
+
+        System.out.println("======================================");
+    }
+
+    // Method to calculate average weekly temperature
+    public static double calculateAverage(
+            ArrayList<Double> temperatures) {
+
+        double total = 0;
+
+        for (double temperature : temperatures) {
+            total += temperature;
+        }
+
+        return total / temperatures.size();
+    }
+
+    // Method to find the highest temperature
+    public static int findHighestTemperature(
+            ArrayList<Double> temperatures) {
+
+        int highestIndex = 0;
+
+        for (int i = 1; i < temperatures.size(); i++) {
+
+            if (temperatures.get(i) >
+                    temperatures.get(highestIndex)) {
+
+                highestIndex = i;
+            }
+        }
+
+        return highestIndex;
+    }
+
+    // Method to find the lowest temperature
+    public static int findLowestTemperature(
+            ArrayList<Double> temperatures) {
+
+        int lowestIndex = 0;
+
+        for (int i = 1; i < temperatures.size(); i++) {
+
+            if (temperatures.get(i) <
+                    temperatures.get(lowestIndex)) {
+
+                lowestIndex = i;
+            }
+        }
+
+        return lowestIndex;
     }
 }
